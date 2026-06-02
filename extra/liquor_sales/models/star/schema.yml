@@ -9,6 +9,12 @@ models:
         tests:
           - unique
           - not_null
+    data_tests:     
+      - dbt_utils.expression_is_true:
+          arguments:
+            expression: "cast(store_number as int64) > 0 "
+          config:
+            severity: warn # accepts only `error` and `warn` default is error
   - name: dim_item
     description: "Dimension table for item."
     columns:
@@ -17,3 +23,14 @@ models:
         tests:
           - unique
           - not_null
+      - name: bottle_volume_ml
+        description: "bottle_volume_ml should not be null"
+        tests: 
+          - not_null
+    data_tests:
+      - dbt_utils.expression_is_true:
+          arguments:
+            expression: "cast(item_number as int64) > 0 "
+          config:
+            severity: warn # accepts only `error` and `warn` default is error
+  
